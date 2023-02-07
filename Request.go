@@ -58,10 +58,18 @@ func getRequestURL(url string, params x.H) string {
 }
 
 func Form(url string, params x.H, header http.Header, duration time.Duration) (*http.Response, error) {
+	if header == nil {
+		header = http.Header{}
+	}
+	header.Set("Content-Type", "application/x-www-form-urlencoded")
 	return do(PostMethod, FormType, url, params, header, duration)
 }
 
 func Json(url string, params x.H, header http.Header, duration time.Duration) (*http.Response, error) {
+	if header == nil {
+		header = http.Header{}
+	}
+
 	header.Set("Content-Type", "application/json")
 	return do(PostMethod, JsonType, url, params, header, duration)
 }
