@@ -46,6 +46,14 @@ func DoRequest(req *Request) (*http.Response, error) {
 	return do(req.Method, req.ContentType, req.Url, req.Params, req.Header, req.Timeout)
 }
 
+func Auth(method MethodType, contentType ContentType, url string, params x.H, header http.Header, duration time.Duration) (*http.Response, error) {
+	if method == GetMethod {
+		return Get(url, params)
+	}
+
+	return do(method, contentType, url, params, header, duration)
+}
+
 func Get(url string, params x.H) (*http.Response, error) {
 	client := http.Client{}
 	return client.Get(getRequestURL(url, params))
