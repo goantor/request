@@ -46,12 +46,16 @@ func DoRequest(req *Request) (*http.Response, error) {
 	return do(req.Method, req.ContentType, req.Url, req.Params, req.Header, req.Timeout)
 }
 
-func Auth(method MethodType, contentType ContentType, url string, params x.H, header http.Header, duration time.Duration) (*http.Response, error) {
+func Auto(method MethodType, contentType ContentType, url string, params x.H, header http.Header, duration time.Duration) (*http.Response, error) {
 	if method == GetMethod {
 		return Get(url, params)
 	}
 
-	return do(method, contentType, url, params, header, duration)
+	if contentType == FormType {
+		return Form(url, params, header, duration)
+	}
+
+	return Json(url, params, header, duration)
 }
 
 func Get(url string, params x.H) (*http.Response, error) {
@@ -69,7 +73,7 @@ func Form(url string, params x.H, header http.Header, duration time.Duration) (*
 	if header == nil {
 		header = http.Header{}
 	}
-	header.Set("Content-Type", "application/x-www-form-urlencoded")
+	header.Set("Content-Type", string(FormType))
 	return do(PostMethod, FormType, url, params, header, duration)
 }
 
@@ -78,7 +82,7 @@ func Json(url string, params x.H, header http.Header, duration time.Duration) (*
 		header = http.Header{}
 	}
 
-	header.Set("Content-Type", "application/json")
+	header.Set("Content-Type", "application/json;charset=utf-8")
 	return do(PostMethod, JsonType, url, params, header, duration)
 }
 
