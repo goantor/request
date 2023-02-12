@@ -2,7 +2,7 @@ module github.com/goantor/request
 
 go 1.20
 
-require github.com/goantor/x v0.0.5
+require github.com/goantor/x v0.0.8
 
 require (
 	github.com/fatih/color v1.14.1 // indirect
@@ -12,7 +12,8 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.11.2 // indirect
 	github.com/goantor/ex v0.0.2 // indirect
-	github.com/goantor/logs v0.0.3 // indirect
+	github.com/goantor/logs v0.0.4 // indirect
+	github.com/goantor/pr v0.0.1 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kr/text v0.2.0 // indirect
@@ -29,10 +30,10 @@ require (
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
-	golang.org/x/crypto v0.5.0 // indirect
-	golang.org/x/net v0.5.0 // indirect
+	golang.org/x/crypto v0.6.0 // indirect
+	golang.org/x/net v0.6.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
-	golang.org/x/text v0.6.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
