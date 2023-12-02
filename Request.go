@@ -20,6 +20,25 @@ const (
 	JsonType ContentType = "application/json"
 )
 
+type Response struct {
+	Code int
+	Body []byte
+}
+
+func takeResponse(resp *http.Response) (ret *Response, err error) {
+	var bs []byte
+	if bs, err = io.ReadAll(resp.Body); err != nil {
+		return
+	}
+
+	ret = &Response{
+		Code: resp.StatusCode,
+		Body: bs,
+	}
+
+	return
+}
+
 type ContentType string
 
 type MethodType string
@@ -142,32 +161,32 @@ func queryParams(params x.H, format string) string {
 	return ret
 }
 
-func PostForm(url string, data x.H, header http.Header, requestTimeout time.Duration) (bytes []byte, err error) {
+func PostForm(url string, data x.H, header http.Header, requestTimeout time.Duration) (ret *Response, err error) {
 	var resp *http.Response
 	if resp, err = Form(url, data, header, requestTimeout); err != nil {
 		return
 	}
 
 	defer resp.Body.Close()
-	return io.ReadAll(resp.Body)
+	return takeResponse(resp)
 }
 
-func PostJson(url string, params x.H, header http.Header, duration time.Duration) (bytes []byte, err error) {
+func PostJson(url string, params x.H, header http.Header, duration time.Duration) (ret *Response, err error) {
 	var resp *http.Response
 	if resp, err = Json(url, params, header, duration); err != nil {
 		return
 	}
 
 	defer resp.Body.Close()
-	return io.ReadAll(resp.Body)
+	return takeResponse(resp)
 }
 
-func FastGet(url string, data x.H) (bytes []byte, err error) {
+func FastGet(url string, data x.H) (ret *Response, err error) {
 	var resp *http.Response
 	if resp, err = Get(url, data); err != nil {
 		return
 	}
 
 	defer resp.Body.Close()
-	return io.ReadAll(resp.Body)
+	return takeResponse(resp)
 }
