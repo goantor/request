@@ -141,3 +141,33 @@ func queryParams(params x.H, format string) string {
 	ret += values.Encode()
 	return ret
 }
+
+func PostForm(url string, data x.H, header http.Header, requestTimeout time.Duration) (bytes []byte, err error) {
+	var resp *http.Response
+	if resp, err = Form(url, data, header, requestTimeout); err != nil {
+		return
+	}
+
+	defer resp.Body.Close()
+	return io.ReadAll(resp.Body)
+}
+
+func PostJson(url string, params x.H, header http.Header, duration time.Duration) (bytes []byte, err error) {
+	var resp *http.Response
+	if resp, err = Json(url, params, header, duration); err != nil {
+		return
+	}
+
+	defer resp.Body.Close()
+	return io.ReadAll(resp.Body)
+}
+
+func FastGet(url string, data x.H) (bytes []byte, err error) {
+	var resp *http.Response
+	if resp, err = Get(url, data); err != nil {
+		return
+	}
+
+	defer resp.Body.Close()
+	return io.ReadAll(resp.Body)
+}
