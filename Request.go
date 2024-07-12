@@ -2,6 +2,7 @@ package request
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/goantor/x"
@@ -113,6 +114,9 @@ func do(method MethodType, contentType ContentType, url string, params x.H, head
 
 	req.Header = header
 	client := http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		},
 		Timeout: duration,
 	}
 
